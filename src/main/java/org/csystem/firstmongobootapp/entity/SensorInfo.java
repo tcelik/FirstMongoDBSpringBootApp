@@ -8,6 +8,11 @@ public class SensorInfo {
     private double data;
     private String place;
 
+    public SensorInfo()
+    {
+
+    }
+
     public SensorInfo(String name, double data, String place)
     {
         this.name = name;

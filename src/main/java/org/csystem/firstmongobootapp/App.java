@@ -53,7 +53,9 @@ public class App {
         return modelAndView; //html olarak bu a.html döndük.
     }
 
-    @PostMapping("mongo-kayit") //get ile geldi buraya
+    @PostMapping("mongo-kayit") //post ile geldi buraya daha önce get ile oraya boş model gönderdik form datasıyla doldu.
+    //sensor form datasıyla oto doldu.
+    //modellerin oradan oraya savrulması spring bootun sorunu her defasında ekle gönder demek gerekmiyor.
     public ModelAndView post(@ModelAttribute SensorInfo sensorInfo)
     {
         m_sensorRepository.insert(sensorInfo); //kayıt et mongoya.

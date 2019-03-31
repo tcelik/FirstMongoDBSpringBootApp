@@ -29,24 +29,8 @@ public class App {
 
     public static void main(String[] args)
     {
-        //SpringApplication.run(App.class, args);
-
-        String input = "ox-flo,red,c-4\nox-flom,blue,c-10";
-
-        String [] result = input.split("\n");
-        String result1 = result[0];
-
-        String [] bana = result1.split(",");
-
-        System.out.println(bana[0]);
-        System.out.println(bana[1]);
-        System.out.println(bana[2]);
-
-        String [] color = {"bl", bana[1]};
-        ItemInfo info = new ItemInfo(bana[0], color, bana[2]);
+        SpringApplication.run(App.class, args);
     }
-
-
 
     @GetMapping("hello")
     public String sensors()
@@ -169,21 +153,6 @@ public class App {
         modelAndView.setViewName("search.html");*/
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // how to remove _class column : Document'a böyle birşey ekliyordu.
 @Configuration

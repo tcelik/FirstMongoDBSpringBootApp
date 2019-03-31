@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Movie Information</title>
 </head>
-<body>
-<h4>Movie Information</h4>
 
-<h5 th:text="'Data:' + ${sensor.data}"></h5>
-<h5 th:text="'Place:' + ${sensor.place}"></h5>
+<body>
+
+<h4>İtem Information</h4>
+
+<h5 th:text="'Name:' + ${result.name}"></h5>
+<h5 th:text="'Raf:' + ${result.where}"></h5>
+
 </body>
 </html>

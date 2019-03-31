@@ -1,5 +1,7 @@
 package org.csystem.firstmongobootapp;
 
+import org.csystem.firstmongobootapp.entity.ItemInfo;
+import org.csystem.firstmongobootapp.entity.SearchView;
 import org.csystem.firstmongobootapp.entity.SensorInfo;
 import org.csystem.firstmongobootapp.repository.ISensorRepository;
 import org.springframework.beans.factory.InitializingBean;
@@ -16,17 +18,34 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 @SpringBootApplication
 @RestController
-@RequestMapping("sensors")
+@RequestMapping("items")
 public class App {
     @Autowired
     private ISensorRepository m_sensorRepository;
 
     public static void main(String[] args)
     {
-        SpringApplication.run(App.class, args);
+        //SpringApplication.run(App.class, args);
+
+        String input = "ox-flo,red,c-4\nox-flom,blue,c-10";
+
+        String [] result = input.split("\n");
+        String result1 = result[0];
+
+        String [] bana = result1.split(",");
+
+        System.out.println(bana[0]);
+        System.out.println(bana[1]);
+        System.out.println(bana[2]);
+
+        String [] color = {"bl", bana[1]};
+        ItemInfo info = new ItemInfo(bana[0], color, bana[2]);
     }
+
 
 
     @GetMapping("hello")
@@ -48,7 +67,7 @@ public class App {
     public ModelAndView a()
     {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("sensor", new SensorInfo());
+        modelAndView.addObject("item", new ItemInfo());
         modelAndView.setViewName("a.html");
         return modelAndView; //html olarak bu a.html döndük.
     }
@@ -56,13 +75,16 @@ public class App {
     @PostMapping("mongo-kayit") //post ile geldi buraya daha önce get ile oraya boş model gönderdik form datasıyla doldu.
     //sensor form datasıyla oto doldu.
     //modellerin oradan oraya savrulması spring bootun sorunu her defasında ekle gönder demek gerekmiyor.
-    public ModelAndView post(@ModelAttribute SensorInfo sensorInfo)
+    public String post(@ModelAttribute ItemInfo item)
     {
-        m_sensorRepository.insert(sensorInfo); //kayıt et mongoya.
+        //System.out.println(item.getName());
 
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("sensor", sensorInfo);
-        return new ModelAndView("result.html");
+        m_sensorRepository.insert(item); //kayıt et mongoya.22
+
+        //ModelAndView modelAndView = new ModelAndView();
+        //modelAndView.addObject("sensor", sensorInfo);
+        //return new ModelAndView("result.html");
+        return "ok";
     }
 
     public ApplicationRunner run(ISensorRepository DAO)
@@ -96,7 +118,71 @@ public class App {
 
         };
     }
+
+
+
+
+
+
+    @GetMapping("search")
+    public ModelAndView itemSearch()
+    {
+        ModelAndView modelAndView = new ModelAndView();
+
+        modelAndView.addObject("itemName", new SearchView());
+
+        modelAndView.setViewName("search.html");
+
+        return modelAndView; //html olarak bu a.html döndük.
+    }
+
+
+
+    @PostMapping("search")
+    public ModelAndView itemSearch(@ModelAttribute SearchView searchView)
+    {
+
+        ItemInfo info = m_sensorRepository.findById("5ca098595666a218ab43670b").get();
+
+        List<ItemInfo> list = m_sensorRepository.findAll();
+
+        ItemInfo result = null;
+        for (int i = 0; i < list.size(); ++i) {
+            if (list.get(i).getName().equalsIgnoreCase(searchView.getItemName())) {
+                result = list.get(i);
+                break;
+            }
+        }
+
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("result", result);
+        modelAndView.setViewName("result.html");
+        return modelAndView; //html olarak bu a.html döndük.
+
+
+        /*
+        ModelAndView modelAndView = new ModelAndView();
+
+        modelAndView.addObject("itemName", new SearchView());
+
+        modelAndView.setViewName("search.html");*/
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // how to remove _class column : Document'a böyle birşey ekliyordu.

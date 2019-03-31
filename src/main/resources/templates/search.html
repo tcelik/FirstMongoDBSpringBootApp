@@ -11,7 +11,7 @@
     <title>Index</title>
 </head>
 <body>
-<h1 style="text-align: center">Hello, world!</h1>
+<h1 style="text-align: center">Ürün ara!</h1>
 
 <div class="container">
     <div class="row">
@@ -23,20 +23,15 @@
     </div>
 
     <div class="row">
-        <h4>Sensor Info Form</h4>
+        <h4>Ürün arıyorum</h4>
 
         <div class="container">
             <div class="row">
-                <form action="#" th:action="@{/items/mongo-kayit}" th:object="${item}" method="post">
+                <form action="#" th:action="@{/items/search}" th:object="${itemName}" method="post">
                     <div>
-                        <input type="text" th:field="*{name}" placeholder="Ürün İsmini giriniz"/>
+                        <input type="text" th:field="*{itemName}" placeholder="Ürün İsmini giriniz"/>
                     </div>
-                    <div>
-                        <input type="text" th:field="*{color}" placeholder="Renkleri giriniz"/>
-                    </div>
-                    <div>
-                        <input type="text" th:field="*{where}" placeholder="Hangi rafta"/>
-                    </div>
+
                     <div>
                         <input type="submit" value="Save"/>
                     </div>
